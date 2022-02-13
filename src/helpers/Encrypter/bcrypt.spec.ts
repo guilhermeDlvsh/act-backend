@@ -4,7 +4,7 @@ function sut() {
   return new EncrypterBcrypt();
 }
 
-describe("Bcrypt encrypter module", () => {
+describe.skip("Bcrypt encrypter module", () => {
   it("should encrypt the value passed in", async () => {
     const test = sut();
     expect(await test.encrypt("teste")).toBeTruthy();

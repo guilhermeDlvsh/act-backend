@@ -1,7 +1,7 @@
-export interface MailSender {
-  send(mailConfig: MailConfig): void;
+export interface IMailSender {
+  send(mailConfig: MailConfig): Promise<void>;
 }
-type MailConfig = {
+export type MailConfig = {
   from: string;
   to: string | string[];
   subject: string;
