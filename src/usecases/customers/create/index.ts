@@ -1,4 +1,4 @@
-import { Encrypter } from "@helpers/Encrypter/types";
+import { IEncrypter } from "@helpers/Encrypter/types";
 import { ICreateUserToken } from "@helpers/utils";
 import { UserRepository } from "@repositories/User/types";
 import {
@@ -25,7 +25,7 @@ export const TIME_IN_HOURS_TOKEN = 24;
 class CreateCustomerUseCase implements ICreateCustomerUseCase {
   private readonly repository: UserRepository;
   private readonly tokenizator: ICreateUserToken;
-  private readonly encrypter: Encrypter;
+  private readonly encrypter: IEncrypter;
   constructor(dependencies: Dependencies) {
     this.repository = dependencies.repository;
     this.encrypter = dependencies.encrypter;

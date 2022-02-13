@@ -1,6 +1,6 @@
 import { User } from "@entities/Users/types";
-import { Encrypter } from "@helpers/Encrypter/types";
-import { MailSender } from "@helpers/MailSender/types";
+import { IEncrypter } from "@helpers/Encrypter/types";
+import { IMailSender } from "@helpers/MailSender/types";
 import { ICreateUserToken } from "@helpers/utils";
 import { UserRepository } from "@repositories/User/types";
 
@@ -9,9 +9,9 @@ export interface CreateCustomerConstructor {
 }
 export type Dependencies = {
   repository: UserRepository;
-  encrypter: Encrypter;
+  encrypter: IEncrypter;
   tokenizator: ICreateUserToken;
-  mailSender: MailSender;
+  mailSender: IMailSender;
 };
 export interface ICreateCustomerUseCase {
   handle(userDTO: CustomerCreateDTO): Promise<Customer>;
