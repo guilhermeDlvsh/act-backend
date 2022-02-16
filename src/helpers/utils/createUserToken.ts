@@ -20,3 +20,4 @@ export class CreateUserToken implements ICreateUserToken {
     return this.tokenGenerator.encode(toEncode);
   }
 }
+export default new CreateUserToken();

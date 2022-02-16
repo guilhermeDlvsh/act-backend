@@ -2,21 +2,15 @@ import nodeMailer from "nodemailer";
 
 import { IMailSender, MailConfig } from "./types";
 
-type ConfigsNodeMailer = {
-  host: string;
-  port: number;
-  user: string;
-  pass: string;
-};
 class MailSenderNodeMailer implements IMailSender {
   private readonly mailer: any;
-  constructor(configs: ConfigsNodeMailer) {
+  constructor() {
     this.mailer = nodeMailer.createTransport({
-      host: configs.host,
-      port: configs.port,
+      host: process.env.NODE_MAILER_HOST,
+      port: process.env.NODE_MAILER_PORT,
       auth: {
-        user: configs.user,
-        pass: configs.pass,
+        user: process.env.NODE_MAILER_USER,
+        pass: process.env.NODE_MAILER_PASS,
       },
     });
   }
