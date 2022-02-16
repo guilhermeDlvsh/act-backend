@@ -1,5 +1,5 @@
 import { User } from "@entities/Users/types";
-import { MailSender } from "@helpers/MailSender/types";
+import { IMailSender } from "@helpers/MailSender/types";
 import { UserRepository } from "@repositories/User/types";
 
 export interface UpdateCustomerConstructor {
@@ -7,7 +7,7 @@ export interface UpdateCustomerConstructor {
 }
 type Dependencies = {
   repository: UserRepository;
-  mailSender: MailSender;
+  mailSender: IMailSender;
 };
 export interface UpdateCustomerUseCase {
   handle(userDTO: CustomerUpdateDTO): Promise<Customer>;
