@@ -1,4 +1,4 @@
-import { IEncrypter } from "@helpers/Encrypter/types";
+import { IEncrypterAsync } from "@helpers/Encrypter/types";
 import { IMailSender } from "@helpers/MailSender";
 import { ICreateUserToken } from "@helpers/utils";
 import { UserRepository } from "@repositories/User/types";
@@ -26,7 +26,7 @@ export const TIME_IN_HOURS_TOKEN = 24;
 class CreateCustomerUseCase implements ICreateCustomerUseCase {
   private readonly repository: UserRepository;
   private readonly tokenizator: ICreateUserToken;
-  private readonly encrypter: IEncrypter;
+  private readonly encrypter: IEncrypterAsync;
   private readonly mailSender: IMailSender;
   constructor(dependencies: Dependencies) {
     this.repository = dependencies.repository;
@@ -46,7 +46,7 @@ class CreateCustomerUseCase implements ICreateCustomerUseCase {
     }
 
     const userToCreate = userDTO;
-    userToCreate.password = this.encrypter.encrypt(userDTO.password);
+    userToCreate.password = await this.encrypter.encrypt(userDTO.password);
     delete userToCreate.confirmPassword;
 
     const userCreated = await this.repository.create(userToCreate);
