@@ -1,13 +1,16 @@
 import { User } from "@entities/Users/types";
 import { RepositoryInMemory } from "@repositories/InMemory";
-import { CreateUserDTO, UpdateUserDTO, UserReturned } from "./types";
-
-class UserInMemory extends RepositoryInMemory<
-  UserReturned,
+import {
   CreateUserDTO,
   UpdateUserDTO,
-  User
-> {
+  UserRepository,
+  UserReturned,
+} from "./types";
+
+class UserInMemory
+  extends RepositoryInMemory<UserReturned, CreateUserDTO, UpdateUserDTO, User>
+  implements UserRepository
+{
   constructor() {
     super([], ["id", "name", "email", "isAdmin", "isActive"], {
       id: "",

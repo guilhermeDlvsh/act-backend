@@ -1,10 +1,10 @@
 import { User } from "@entities/Users/types";
 
 export interface UserRepository {
-  create(user: CreateUserDTO): UserReturned;
-  update(user: UpdateUserDTO): UserReturned;
-  getById(id: string): UserReturned;
-  getBy(params: GetByDTO): UserReturned[];
+  create(user: CreateUserDTO): Promise<UserReturned>;
+  update(id: string, user: UpdateUserDTO): Promise<UserReturned>;
+  getById(id: string): Promise<UserReturned | null>;
+  getBy(params: GetByDTO): Promise<UserReturned[]>;
 }
 
 export type UserReturned = {

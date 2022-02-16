@@ -1,9 +1,9 @@
 export interface IRepository<D, C, U> {
   create: (data: C) => Promise<D>;
-  getById: (id: number) => Promise<D | null>;
-  getBy: (columnName: string, data: any) => Promise<D[]>;
-  update: (id: number, data: U) => Promise<D>;
-  remove: (id: number) => Promise<void>;
+  getById: (id: string) => Promise<D | null>;
+  getBy: ({ columnName: string, columnValue: any }) => Promise<D[]>;
+  update: (id: string, data: U) => Promise<D>;
+  remove: (id: string) => Promise<void>;
   paginate: (params: ParamsType) => Promise<PaginateReturnType<D>>;
 }
 
@@ -35,7 +35,7 @@ export class RepositoryInMemory<D, C, U, T> implements IRepository<D, C, U> {
     this.response = keysD;
     this.defaultValues = defaultValues;
   }
-  async getById(id: number): Promise<D | null> {
+  async getById(id: string): Promise<D | null> {
     // @ts-ignore
     const response = await this.data.find((item) => item.id === id);
     if (!response) {
@@ -43,13 +43,15 @@ export class RepositoryInMemory<D, C, U, T> implements IRepository<D, C, U> {
     }
     return this.filter([response])[0];
   }
-  async getBy(columnName: string, data: any): Promise<D[]> {
+  async getBy(params: { columnName: string; columnValue: any }): Promise<D[]> {
     // @ts-ignore
     return this.filter(
-      await this.data.filter((item) => item[columnName] === data),
+      await this.data.filter(
+        (item) => item[params.columnName] === params.columnValue,
+      ),
     );
   }
-  async update(id: number, data: U): Promise<D> {
+  async update(id: string, data: U): Promise<D> {
     // @ts-ignore
     const index = this.data.findIndex((item) => (item.id = id));
     const columns = Object.getOwnPropertyNames(data);
@@ -58,7 +60,7 @@ export class RepositoryInMemory<D, C, U, T> implements IRepository<D, C, U> {
     });
     return this.filter([await this.data[index]])[0];
   }
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     // @ts-ignore
     const index = this.data.findIndex((item) => (item.id = id));
     await this.data.splice(index, 1);
@@ -69,7 +71,7 @@ export class RepositoryInMemory<D, C, U, T> implements IRepository<D, C, U> {
   async create(data: C): Promise<D> {
     // @ts-ignore
     this.data.push(this.default(data));
-    return this.filter([this.data[this.data.length - 1]])[0];
+    return await this.filter([this.data[this.data.length - 1]])[0];
   }
   private filter(data: T[]): D[] {
     const newData: any[] = [];
