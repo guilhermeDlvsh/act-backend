@@ -1,5 +1,5 @@
 import { User } from "@entities/Users/types";
-import { MailSender } from "@helpers/MailSender/types";
+import { IMailSender } from "@helpers/MailSender/types";
 import { UserRepository } from "@repositories/User/types";
 
 export interface ChangeForgotPasswordConstructor {
@@ -7,7 +7,7 @@ export interface ChangeForgotPasswordConstructor {
 }
 type Dependencies = {
   repository: UserRepository;
-  mailSender: MailSender;
+  mailSender: IMailSender;
 };
 export interface ChangeForgotPasswordUseCase {
   handle(
@@ -18,5 +18,5 @@ export interface ChangeForgotPasswordUseCase {
 
 type ChangeForgotPasswordDTO = {
   password: User["password"];
-  confirmPassword: User["confirmPassword"];
+  confirmPassword: String;
 };

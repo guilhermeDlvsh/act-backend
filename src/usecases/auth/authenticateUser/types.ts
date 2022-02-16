@@ -1,5 +1,5 @@
 import { User } from "@entities/Users/types";
-import { Encrypter } from "@helpers/Encrypter/types";
+import { IEncrypter } from "@helpers/Encrypter/types";
 import { ICreateUserToken } from "@helpers/utils";
 import { UserRepository } from "@repositories/User/types";
 
@@ -8,7 +8,7 @@ export interface CreateCustomerConstructor {
 }
 type Dependencies = {
   repository: UserRepository;
-  encrypter: Encrypter;
+  encrypter: IEncrypter;
   createUserToken: ICreateUserToken;
 };
 export interface CreateCustomerUseCase {
@@ -24,7 +24,7 @@ type UserAuthenticated = {
   name: User["name"];
   email: User["email"];
   id: User["id"];
-  token: User["token"];
+  token: string;
 };
 export type TokenParams = {
   exp: number;

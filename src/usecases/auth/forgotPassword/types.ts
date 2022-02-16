@@ -1,6 +1,6 @@
 import { User } from "@entities/Users/types";
-import { MailSender } from "@helpers/MailSender/types";
-import { Tokenizator } from "@helpers/Tokenizator/types";
+import { IMailSender } from "@helpers/MailSender/types";
+import { ITokenGenerator } from "@helpers/TokenGenerator/types";
 import { UserRepository } from "@repositories/User/types";
 
 export interface ForgotPasswordConstructor {
@@ -8,8 +8,8 @@ export interface ForgotPasswordConstructor {
 }
 type Dependencies = {
   repository: UserRepository;
-  tokenizator: Tokenizator;
-  mailSender: MailSender;
+  tokenizator: ITokenGenerator;
+  mailSender: IMailSender;
 };
 export interface ForgotPasswordUseCase {
   handle(ForgotPasswordDTO: ForgotPasswordDTO): Promise<void>;
