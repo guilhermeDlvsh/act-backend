@@ -1,4 +1,5 @@
 import { IEncrypter } from "@helpers/Encrypter/types";
+import { IMailSender } from "@helpers/MailSender";
 import { ICreateUserToken } from "@helpers/utils";
 import { UserRepository } from "@repositories/User/types";
 import {
@@ -26,10 +27,12 @@ class CreateCustomerUseCase implements ICreateCustomerUseCase {
   private readonly repository: UserRepository;
   private readonly tokenizator: ICreateUserToken;
   private readonly encrypter: IEncrypter;
+  private readonly mailSender: IMailSender;
   constructor(dependencies: Dependencies) {
     this.repository = dependencies.repository;
     this.encrypter = dependencies.encrypter;
     this.tokenizator = dependencies.tokenizator;
+    this.mailSender = dependencies.mailSender;
   }
   async handle(userDTO: CustomerCreateDTO): Promise<Customer> {
     this.validate(userDTO);
@@ -49,8 +52,17 @@ class CreateCustomerUseCase implements ICreateCustomerUseCase {
     const userCreated = await this.repository.create(userToCreate);
 
     const token = this.tokenizator.create(userCreated, TIME_IN_HOURS_TOKEN);
-    console.log(token);
-    throw new Error("Not implemented yet");
+
+    this.mailSender.send({
+      from: "email@email.com",
+      to: "teste@email.com",
+      subject: "E-mail de teste",
+      html: "<h1>Teste<h1>",
+    });
+    return {
+      ...userCreated,
+      token,
+    };
   }
   private validate(userDTO: CustomerCreateDTO): boolean {
     if (userDTO.name == undefined) {

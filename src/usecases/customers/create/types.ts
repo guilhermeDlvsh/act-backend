@@ -28,4 +28,5 @@ export type Customer = {
   name: CustomerCreateDTO["name"];
   email: CustomerCreateDTO["email"];
   id: User["id"];
+  token: string;
 };

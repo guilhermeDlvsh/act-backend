@@ -1,0 +1,49 @@
+<html lang="en">
+  <head>
+    <style>
+      body{ 
+        display: flex;
+        background: #FFFFFF;
+        flex-direction: column;
+        align-items: center;
+      }
+      .imagem{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .imagem > img { 
+        weight: 90%;
+        height: min-content;
+      }
+      .container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+        background: #6E0B0B;
+        border-radius: 10px;
+        padding-top: 10px;
+        padding-bottom: 20px;
+      }
+      h1,p { 
+        color: #1A1A1A;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="imagem">
+      <img src={{link_image}} />
+    </div>
+    <div class="container">
+      <h1 class="title">Bem vindo, {{name}}!</h1>
+      <p class="description">
+        Sua conta foi criada!
+      </p>
+      <p class="description">
+        Para ativar sua conta clique no link abaixo
+      </p>
+      <a href={{link}}>Ativar</a>
+    </div>
+  </body>
+</html>
