@@ -1,1 +1,1 @@
-export { ICreateUserToken } from "./createUserToken";
+export { CreateUserToken, ICreateUserToken } from "./createUserToken";
